@@ -5,9 +5,12 @@ import (
     "fmt"
     "strings"
     "strconv"
+    "log"
 )
 
 func jsonResponse(w http.ResponseWriter, json string) {
+    log.Println("Rendering JSON")
+
     w.Header().Set("Content-Type", "application/json")
     fmt.Fprintf(w, json)
 }
@@ -18,4 +21,15 @@ func extractId(path string) (id int) {
     id, _ = strconv.Atoi(idStr)
 
     return id
+}
+
+func getIP(r *http.Request) string {
+    addr := r.RemoteAddr
+    addrSplit := strings.Split(addr, ":")
+
+    if addrSplit[0] == "[" {
+        return "127.0.0.1"
+    }
+
+    return addrSplit[0]
 }

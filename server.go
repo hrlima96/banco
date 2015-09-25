@@ -19,5 +19,7 @@ func main() {
     http.HandleFunc("/users", utilities.Users)
     http.HandleFunc("/users/", utilities.User)
 
+    log.Printf("Server listening on port %d...", *port)
+    fmt.Println()
     log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", *port), nil))
 }
